@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  
   def index
     @courses = Course.all
   end
@@ -13,6 +15,7 @@ class CoursesController < ApplicationController
   
   def create
     @course = Course.new(course_params)
+    @course.user = current_user
     if @course.save
       redirect_to courses_path
     else
@@ -21,11 +24,11 @@ class CoursesController < ApplicationController
   end
   
   def edit
-    @course = Course.find(params[:id])
+    @course = current_user.courses.find(params[:id])
   end
   
   def update
-    @course = Course.find(params[:id])
+    @course = current_user.courses.find(params[:id])
     @course.assign_attributes(course_params)
     
     if @course.valid?
@@ -37,7 +40,7 @@ class CoursesController < ApplicationController
   end
   
   def destroy
-    @course = Course.find(params[:id])
+    @course = current_user.courses.find(params[:id])
     @course.destroy
     redirect_to courses_path
   end
