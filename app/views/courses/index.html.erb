@@ -16,7 +16,7 @@
         <tr>
           <td> # </td>
           <td><%= link_to course.title, course_path(course) %></td>
-          <td><%= course.desciption %></td>
+          <td><%= course.description %></td>
           <td>
             <%= link_to "Edit", edit_course_path(course), class: "btn btn-xs" %>
             <%= link_to "Delete", course_path(course), method: :delete, class: "btn btn-xs" %>
